@@ -8,7 +8,7 @@ Casual web expects Casual administration services to be available at `/.casual`.
 
 If needed add to nginx configuration:
 
-```sh
+```
 location /.casual {
     casual_pass;
 }
@@ -56,9 +56,9 @@ This will generate a `build` folder that includes everything needed to deploy th
 
 ## Serving from Casual
 
-Copy the `build` folder to `/opt/casual/webapp/` and configure nginx:
+Copy the content of the `build` folder to `/opt/casual/webapp/` and configure nginx:
 
-```sh
+```
 location / {
     root /opt/casual/webapp/;
     try_files $uri $uri/ /index.html;
