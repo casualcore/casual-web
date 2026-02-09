@@ -39,9 +39,8 @@
   {/each}
 </p>
 
-<!-- <div>
-  <p>Path: {executable?.path}</p>
-  <p>Arguments: {executable?.arguments.join(', ')}</p>
-</div> -->
+<h4 class="scroll-m-20 text-xl font-semibold tracking-tight">
+  Instances
+</h4>
 
 <ExecutableInstanceDataTable {instances} />
