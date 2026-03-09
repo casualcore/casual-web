@@ -89,13 +89,4 @@ export const columns: ColumnDef<ServiceInstanceTableRow>[] = [
       class: "text-right",
     },
   },
-  {
-    accessorKey: "ipc",
-    header: ({ column }) =>
-      renderComponent(DataTableHeaderButton<ServiceInstanceTableRow>, {
-        header: "IPC",
-        column,
-        onclick: column.getToggleSortingHandler(),
-      }),
-  },
 ];

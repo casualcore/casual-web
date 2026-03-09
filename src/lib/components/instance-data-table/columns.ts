@@ -70,15 +70,6 @@ export const columns: ColumnDef<InstanceTableRow>[] = [
     },
   },
   {
-    accessorKey: "ipc",
-    header: ({ column }) =>
-      renderComponent(DataTableHeaderButton<InstanceTableRow>, {
-        header: "IPC",
-        column,
-        onclick: column.getToggleSortingHandler(),
-      }),
-  },
-  {
     accessorKey: "spawnpoint",
     header: ({ column }) =>
       renderComponent(DataTableHeaderButton<InstanceTableRow>, {
