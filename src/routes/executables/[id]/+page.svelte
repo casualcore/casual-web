@@ -7,6 +7,7 @@
   import PageHeader from "$lib/components/page-header.svelte";
   import CellEnabled from "$lib/components/data-table/cell-enabled.svelte";
   import ExecutableInstanceDataTable from "$lib/components/executable-instance-data-table/executable-instance-data-table.svelte";
+  import ActionButton from "$lib/components/action-button.svelte";
 
   const casual = getCasualState();
   const uiState = getUiState();
@@ -21,7 +22,16 @@
   const instances = $derived(casual.executableInstances(executableId));
 </script>
 
-<PageHeader>
+{#snippet actions()}
+  <ActionButton
+    label="Restart"
+    onclick={async () => await casual.domainRestartAlias(executable!.alias)}
+    successMessage={`${executable?.alias} restarted`}
+    errorMessage={`Failed to restart ${executable?.alias}`}
+  />
+{/snippet}
+
+<PageHeader {actions}>
   {executable?.alias}
   <CellEnabled enabled={executable?.enabled || false} />
 </PageHeader>

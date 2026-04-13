@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { ModeWatcher } from "mode-watcher";
+  import { ModeWatcher, mode } from "mode-watcher";
   import { useInterval } from "runed";
+  import { Toaster } from "svelte-sonner";
   import RefreshIcon from "@lucide/svelte/icons/refresh-ccw";
   import RefreshDotIcon from "@lucide/svelte/icons/refresh-ccw-dot";
   import MoreHorizontal from "@lucide/svelte/icons/more-horizontal";
@@ -13,6 +14,7 @@
   import * as Tooltip from "$lib/components/ui/tooltip";
   import { setCasualState } from "$lib/casual";
   import { setUiState } from "$lib/uistate/uistate.svelte";
+  import { setNotifications } from "$lib/notifications/notifications.svelte";
   import favicon from '$lib/assets/casual-symbol-bw.svg';
   import Breadcrumb from "./breadcrumb.svelte";
 
@@ -22,6 +24,7 @@
 
   const uiState = setUiState();
   const casual = setCasualState();
+  setNotifications();
 
   uiState.setBreadcrumb([]);
 
@@ -41,6 +44,11 @@
 </svelte:head>
 
 <ModeWatcher />
+<Toaster
+  richColors
+  position="bottom-right"
+  theme={mode.current}
+/>
 
 <Sidebar.Provider>
   <AppSidebar />

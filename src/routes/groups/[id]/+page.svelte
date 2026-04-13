@@ -6,6 +6,7 @@
   import GroupMemberDataTable from "$lib/components/group-member-data-table/group-member-data-table.svelte";
   import PageHeader from "$lib/components/page-header.svelte";
   import CellEnabled from "$lib/components/data-table/cell-enabled.svelte";
+  import ActionButton from "$lib/components/action-button.svelte";
 
   const casual = getCasualState();
   const uiState = getUiState();
@@ -18,7 +19,16 @@
   const members = $derived(casual.groupMembers(groupId))
 </script>
 
-<PageHeader>
+{#snippet actions()}
+  <ActionButton
+    label="Restart"
+    onclick={async () => await casual.domainRestartGroup(group!.name)}
+    successMessage={`${group?.name} restarted`}
+    errorMessage={`Failed to restart ${group?.name}`}
+  />
+{/snippet}
+
+<PageHeader {actions}>
   {group?.name}
   <CellEnabled enabled={group?.enabled || false} />
 </PageHeader>

@@ -40,8 +40,8 @@ export class Casual {
     this.loadState();
   }
 
-  refresh() {
-    this.loadState();
+  async refresh() {
+    await this.loadState();
   }
 
   private async loadState() {
@@ -58,6 +58,16 @@ export class Casual {
     });
 
     return await response.json();
+  }
+
+  private async post(service: string, data: any) {
+    await fetch(`/${service}`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    });
   }
 
   private async loadDomainState() {
@@ -131,6 +141,37 @@ export class Casual {
         .filter(s => s.memberships.includes(groupId))
         .map(member => ({ type: "executable", member }) as Ui.GroupMember),
     ]
+  }
+
+  public async domainScaleAlias(alias: string, instances: number) {
+    await this.post(".casual/domain/scale/aliases", {
+      aliases: [{
+        name: alias,
+        instances,
+      }]
+    });
+  }
+
+  public async domainRestartAlias(alias: string) {
+    await this.post(".casual/domain/restart/aliases", {
+      aliases: [{
+        name: alias,
+      }]
+    });
+  }
+
+  public async domainRestartGroup(alias: string) {
+    await this.post(".casual/domain/restart/groups", {
+      aliases: [{
+        name: alias,
+      }]
+    });
+  }
+
+  public async serviceMetricReset(name: string) {
+    await this.post(".casual/service/metric/reset", {
+      services: [name]
+    });
   }
 }
 

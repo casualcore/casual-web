@@ -7,6 +7,9 @@
   import InstanceDataTable from "$lib/components/instance-data-table/instance-data-table.svelte";
   import PageHeader from "$lib/components/page-header.svelte";
   import CellEnabled from "$lib/components/data-table/cell-enabled.svelte";
+  import ButtonGroup from "$lib/components/ui/button-group/button-group.svelte";
+  import ScaleButton from "./scale-button.svelte";
+  import ActionButton from "$lib/components/action-button.svelte";
 
   const casual = getCasualState();
   const uiState = getUiState();
@@ -21,7 +24,19 @@
   const instances = $derived(casual.serverInstances(serverId));
 </script>
 
-<PageHeader>
+{#snippet actions()}
+  <ButtonGroup>
+    <ScaleButton alias={server!.alias} numberOfInstances={instances.length} />
+    <ActionButton
+      label="Restart"
+      onclick={async () => await casual.domainRestartAlias(server!.alias)}
+      successMessage={`${server?.alias} restarted`}
+      errorMessage={`Failed to restart ${server?.alias}`}
+    />
+  </ButtonGroup>
+{/snippet}
+
+<PageHeader {actions}>
   {server?.alias}
   <CellEnabled enabled={server?.enabled || false} />
 </PageHeader>
