@@ -2,7 +2,7 @@
   import SettingsIcon from "@lucide/svelte/icons/settings";
   import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
   import { Button } from "../ui/button";
-  import { getUiState } from "$lib/uistate/uistate.svelte";
+  import { getUiState, DURATIONS_RESOLUTION } from "$lib/uistate/uistate.svelte";
   
   const uiState = getUiState();
 </script>
@@ -21,6 +21,14 @@
       {/snippet}
     </DropdownMenu.Trigger>
     <DropdownMenu.Content align="end" class="w-52">
+      <DropdownMenu.Group>
+        <DropdownMenu.Label>Durations resolution</DropdownMenu.Label>
+        <DropdownMenu.RadioGroup bind:value={uiState.durationsResolution}>
+          <DropdownMenu.RadioItem value={DURATIONS_RESOLUTION.MS}>Milliseconds</DropdownMenu.RadioItem>
+          <DropdownMenu.RadioItem value={DURATIONS_RESOLUTION.US}>Microseconds</DropdownMenu.RadioItem>
+        </DropdownMenu.RadioGroup>
+      </DropdownMenu.Group>
+      <DropdownMenu.Separator />
       <DropdownMenu.Group>
         <DropdownMenu.CheckboxItem checked={uiState.showHidden} onSelect={() => uiState.showHidden = !uiState.showHidden}>
           Show hidden

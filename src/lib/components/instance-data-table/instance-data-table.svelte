@@ -12,7 +12,7 @@
     instances: Instance[]
   } = $props();
 
-  const { hiddenBy } = tableUtils();
+  const { hiddenBy, formatDate } = tableUtils();
 
   const data = $derived(instances
     .filter(hiddenBy(i => i.alias))
@@ -22,7 +22,7 @@
       state: i.instance.state,
       pid: i.instance.handle.pid,
       ipc: base64toHex(i.instance.handle.ipc),
-      spawnpoint: new Date(i.instance.spawnpoint/1000000).toISOString(),
+      spawnpoint: formatDate(i.instance.spawnpoint),
     })));
 
   const initialSorting =[{ id: "alias", desc: false }];
