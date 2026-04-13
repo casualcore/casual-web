@@ -5,6 +5,7 @@
   import PageHeader from "$lib/components/page-header.svelte";
   import CellVisibility from "$lib/components/service-data-table/cell-visibility.svelte";
   import CellMode from "$lib/components/service-data-table/cell-mode.svelte";
+  import ActionButton from "$lib/components/action-button.svelte";
 
   const {
     service,
@@ -29,10 +30,22 @@
   uiState.setBreadcrumb([pages.services, { title: service.name }]);
 </script>
 
-<PageHeader>
-  {service.name}
+{#snippet badges()}
   <CellVisibility visibility={service.visibility} />
-  <CellMode mode={service.transaction} />
+  <CellMode mode={service.transaction} />  
+{/snippet}
+
+{#snippet actions()}
+  <ActionButton
+    label="Reset metrics"
+    onclick={async () => await casual.serviceMetricReset(service.name)}
+    successMessage={`${service.name} metrics reset`}
+    errorMessage={`Failed to reset metrics for ${service.name}`}
+  />
+{/snippet}
+
+<PageHeader {badges} {actions}>
+  {service.name}
 </PageHeader>
 
 <h4 class="scroll-m-20 text-xl font-semibold tracking-tight">
