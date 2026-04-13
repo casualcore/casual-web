@@ -11,7 +11,7 @@
     services: Service[]
   } = $props();
 
-  const { hiddenBy } = tableUtils();
+  const { hiddenBy, formatDuration, formatDate } = tableUtils();
 
   const data = $derived(services
     .filter(hiddenBy(s => s.name))
@@ -25,11 +25,11 @@
       instancesConcurrent: s.instances.concurrent.length,
       invokedCount: s.metric.invoked.count,
       pendingCount: s.metric.pending.count,
-      at: (s.metric.invoked.count > 0 ? (s.metric.invoked.total / s.metric.invoked.count / 1000000000) : 0).toFixed(3),
-      min: (s.metric.invoked.limit.min / 1000000000).toFixed(3),
-      max: (s.metric.invoked.limit.max / 1000000000).toFixed(3),
-      pat: (s.metric.pending.count > 0 ? (s.metric.pending.total / s.metric.pending.count) : 0).toFixed(3),
-      last: s.metric.last > 0 ? new Date(s.metric.last/1000000).toISOString() : "",
+      at: formatDuration(s.metric.invoked.count > 0 ? (s.metric.invoked.total / s.metric.invoked.count) : 0),
+      min: formatDuration(s.metric.invoked.limit.min),
+      max: formatDuration(s.metric.invoked.limit.max),
+      pat: formatDuration(s.metric.pending.count > 0 ? (s.metric.pending.total / s.metric.pending.count) : 0),
+      last: formatDate(s.metric.last),
     })
   ));
 

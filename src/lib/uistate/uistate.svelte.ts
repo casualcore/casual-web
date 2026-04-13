@@ -28,10 +28,22 @@ export const pages = {
   }
 };
 
+export const DURATIONS_RESOLUTION = {
+  MS: "ms",
+  US: "us",
+};
+
+export const DURATIONS_RESOLUTION_DECIMALS = {
+  [DURATIONS_RESOLUTION.MS]: 3,
+  [DURATIONS_RESOLUTION.US]: 6,
+};
+
 export class UiState {
   breadcrumbs = $state<Breadcrumb[]>([]);
 
   showHidden = $state(false);
+
+  durationsResolution = $state(DURATIONS_RESOLUTION.MS);
 
   setBreadcrumb(breadcrumbs: Breadcrumb[]) {
     this.breadcrumbs = breadcrumbs;
