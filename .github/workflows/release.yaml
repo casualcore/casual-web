@@ -1,0 +1,38 @@
+name: Build Casual Web - Release
+on: 
+  push:
+    branches:
+      - 'release/*'
+
+jobs:
+  calculate-version: 
+    runs-on: ubuntu-latest
+    outputs:
+      casual_webui_version: ${{ steps.casual_webui_version.outputs.value }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: calculate_version
+        id: casual_webui_version
+        run: |
+          cd ${{ github.workspace }}
+          echo "value=$(jq -r '.version' package.json)" >> $GITHUB_OUTPUT
+
+  build:
+    needs: [calculate-version]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - run: npm ci
+      - run: npm run build
+      - run: |
+          cd ${{ github.workspace }}
+          mv build casual-web-${{ needs.calculate-version.outputs.casual_webui_version }}
+
+      - name: Save artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: casual-web-${{ needs.calculate-version.outputs.casual_webui_version }}
+          path: ./**/casual-web*
