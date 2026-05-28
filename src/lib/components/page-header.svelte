@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
+  import { configuration } from "$lib/configuration";
 
   const {
     children,
@@ -23,5 +24,7 @@
       </div>
     </div>
   </div>
-  {@render actions?.()}
+  {#if !configuration.read_only}
+    {@render actions?.()}
+  {/if}
 </div>

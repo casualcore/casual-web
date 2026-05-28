@@ -16,11 +16,14 @@
   import { setUiState } from "$lib/uistate/uistate.svelte";
   import { setNotifications } from "$lib/notifications/notifications.svelte";
   import favicon from '$lib/assets/casual-symbol-bw.svg';
+  import { loadConfiguration, provider as configurationProvider } from "$lib/configuration";
   import Breadcrumb from "./breadcrumb.svelte";
 
   import '../app.css';
   
   let { children } = $props();
+
+  loadConfiguration(configurationProvider);
 
   const uiState = setUiState();
   const casual = setCasualState();
@@ -35,7 +38,7 @@
 
   const toggleAutoRefresh = () => refreshInterval.isActive
     ? refreshInterval.pause()
-    : refreshInterval.resume();
+    : refreshInterval.resume();  
 </script>
 
 <svelte:head>
