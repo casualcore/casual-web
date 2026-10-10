@@ -34,4 +34,24 @@ describe('configuration state', () => {
 
     expect(configuration.read_only).toBe(false);
   });
+
+  it('merges default with loaded configuration', async() => {
+    await loadConfiguration({
+      load: async () => ({})
+    } as ConfigurationProvider);
+
+    expect(configuration.read_only).toBe(true);
+  });
+
+  it('ignores extra properties returned by the provider', async() => {
+    await loadConfiguration({
+      load: async () => ({
+        read_only: false,
+        extra_flag: true,
+      })
+    } as ConfigurationProvider);
+
+    expect(configuration.read_only).toBe(false);
+    expect((configuration as any).extra_flag).toBeUndefined();
+  });
 });
