@@ -1,5 +1,8 @@
 node_modules
 
+# local casual-web configuration
+configuration.local.json
+
 # Output
 .output
 .vercel

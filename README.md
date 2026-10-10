@@ -4,7 +4,7 @@ Web ui for Casual built using [`SvelteKit`](https://svelte.dev/docs/kit/introduc
 
 ## Casual
 
-Casual web expects Casual administration services to be available at `/.casual`. E.g `http://domain/.casual/domain/state`.
+Casual web expects Casual administration services to be available at `/.casual`. E.g `http://[domain]/.casual/domain/state`.
 
 If needed add to nginx configuration:
 
@@ -14,7 +14,25 @@ location /.casual {
 }
 ```
 
-## Developing
+## Configuration
+
+When Casual web client loads it fetches configuration from `http://[domain]/configuration.json`.
+
+Configuration file is created created manually, it is not included in the build.
+
+|Setting|Type|Default|Description|
+|-------|----|-------|-----------|
+|`read_only`|bool|`true`|Set to `false` to enable scaling/restart etc|
+
+**Example configuration.json**
+
+```json
+{
+  "read_only": false
+}
+```
+
+## Development
 
 Start a development server:
 
@@ -41,6 +59,10 @@ export default defineConfig({
   // ...
 })
 ```
+
+### Dev configuration
+
+When in dev mode the client gets its configuration from `configuration.local.json` if it exists. See section [Configuration](#configuration) for options. `configuration.local.json` is ignored by git.
 
 ## Building
 
