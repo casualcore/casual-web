@@ -14,7 +14,7 @@
   const groupId = $derived(Number(page.params.id));
   const group = $derived(casual.domainState.groups.find(g => g.id === groupId));
 
-  uiState.setBreadcrumb([pages.groups, { title: group?.name }])
+  $effect(() => uiState.setBreadcrumb([pages.groups, { title: group?.name }]));
 
   const members = $derived(casual.groupMembers(groupId))
 </script>

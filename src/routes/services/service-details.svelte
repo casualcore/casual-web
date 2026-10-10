@@ -27,7 +27,7 @@
     }) as Ui.ServiceInstace)
   ]);
 
-  uiState.setBreadcrumb([pages.services, { title: service.name }]);
+  $effect(() => uiState.setBreadcrumb([pages.services, { title: service.name }]));
 </script>
 
 {#snippet badges()}

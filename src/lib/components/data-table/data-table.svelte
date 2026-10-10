@@ -1,5 +1,5 @@
 <script lang="ts" generics="TData, TValue">
-  import type { Snippet } from "svelte";
+  import { untrack, type Snippet } from "svelte";
   import {
     type Table as TableType,
     type ColumnDef,
@@ -27,14 +27,16 @@
   let { data, columns, toolbar, initialSorting, initialColumnVisibility }: DataTableProps<TData, TValue> = $props();
 
   let columnFilters = $state<ColumnFiltersState>([]);
-  let sorting = $state<SortingState>(initialSorting ?? []);
-  let columnVisibility = $state<VisibilityState>(initialColumnVisibility ?? {});
+  let sorting = $state<SortingState>(untrack(() => initialSorting ?? []));
+  let columnVisibility = $state<VisibilityState>(untrack(() => initialColumnVisibility ?? {}));
 
   const table = createSvelteTable({
     get data() {
       return data;
     },
-    columns,
+    get columns() {
+      return columns;
+    },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
