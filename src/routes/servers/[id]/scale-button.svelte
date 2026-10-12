@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { untrack } from "svelte";
   import { getCasualState } from "$lib/casual";
   import { getNotifications } from "$lib/notifications/notifications.svelte";
   import Button from "$lib/components/ui/button/button.svelte";
@@ -20,7 +21,7 @@
 
   let open = $state(false);
   let loading = $state(false);
-  let value = $state<number>(numberOfInstances);
+  let value = $state<number>(untrack(() => numberOfInstances));
 
   let canApply = $derived(!loading && Number.isInteger(value) && Number(value) > 0);
 
