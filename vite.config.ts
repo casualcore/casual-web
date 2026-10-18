@@ -1,9 +1,14 @@
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vitest/config';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { devConfigurationMiddleware } from './vite-dev-configuration';
 
 export default defineConfig({
-	plugins: [tailwindcss(), sveltekit()],
+	plugins: [
+		tailwindcss(),
+		sveltekit(),
+		devConfigurationMiddleware(),
+	],
 	server: {
     proxy: {
       '/.casual': {
