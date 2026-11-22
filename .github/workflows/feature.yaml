@@ -3,9 +3,7 @@ on:
   push:
     branches:
       - 'feature/**'
-      - '!feature/*/main'
       - 'patch/**'
-      - '!patch/*/main'
 
 jobs:
   calculate-version: 
